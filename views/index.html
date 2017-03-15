@@ -1,0 +1,151 @@
+<!-- This is a static file -->
+<!-- served from your routes in server.js -->
+
+<!-- You might want to try something fancier: -->
+<!-- html/nunjucks docs: https://mozilla.github.io/nunjucks/ -->
+<!-- pug: https://pugjs.org/ -->
+<!-- haml: http://haml.info/ -->
+<!-- hbs(handlebars): http://handlebarsjs.com/ -->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Billboard Top 100 API</title>
+    <meta name="description" content="Find the Billboard #1 song for any date (since 1959)">
+    <link id="favicon" rel="icon" href="https://glitch.com/edit/favicon-app.ico" type="image/x-icon">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>
+          Billboard Top 100 API
+        </h1>
+        <h3>
+          Find the Billboard #1 song for any date (since 1959)
+        </h3>
+      </header>
+    </div>
+
+    <main>
+      <div class="container">
+        <form>
+        <div class="panel form-wrap">
+          <div class="col-md-3">
+            <select class="form-control" name="month">
+              <option value="Jan">January</option>
+              <option value="Feb">February</option>
+              <option value="Mar">March</option>
+              <option value="Apr">April</option>
+              <option value="May">May</option>
+              <option value="Jun">June</option>
+              <option value="Jul">July</option>
+              <option value="Aug">August</option>
+              <option value="Sep">September</option>
+              <option value="Oct">October</option>
+              <option value="Nov">November</option>
+              <option value="Dec">December</option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <input class="form-control" type="number" name="day" placeholder="Day" min="0" max="31">
+          </div>
+          <div class="col-md-3">
+            <input class="form-control" type="number" name="year" placeholder="Year" min="1959">
+          </div>
+          <div class="col-md-3 text-center">
+            <input class="btn btn-primary btn-block" type="submit" value="Find That Song!">
+          </div>
+        </div>
+        </form>
+        <div class="result">
+          
+        </div>
+        <div class="panel usage">
+          <h2>
+            API Usage:
+          </h2>
+          <hr>
+          <pre>
+// Get a list of all #1 songs in a given year
+GET /:year
+
+// Returns:
+[
+  {
+    "name": "Name of hit song",
+    "artist": "Name of Artist",
+    "startDate": "(first day on chart, in UTC)",
+    "endDate": "(last day on chart, in UTC)"
+  },
+  ...
+]
+          </pre>
+          <a href="/1969" class="btn btn-primary">Example (GET /1969)</a>
+          <hr>
+          <pre>
+// Get a list of all #1 songs in a given month
+GET /:year/:month
+
+// Returns:
+[
+  {
+    "name": "Name of hit song",
+    "artist": "Name of Artist"
+  },
+  ...
+]
+          </pre>
+          <a href="/1969/Feb" class="btn btn-primary">Example (GET /1969/Feb)</a>
+          <hr>
+          <pre>
+// Get the #1 song for a given day
+GET /:year/:month/:day
+
+// Returns:
+{
+  "name": "Name of hit song",
+  "artist": "Name of Artist",
+  "startDate": "(first day on chart, in UTC)",
+  "endDate": "(last day on chart, in UTC)"
+}
+          </pre>
+          <a href="/1969/Feb/14" class="btn btn-primary">Example (GET /1969/Feb/14)</a>
+          <hr>
+        </div>
+      </div>
+    </main>
+
+    <!-- Your web-app is https, so your scripts need to be too -->
+    <script src="https://code.jquery.com/jquery-2.2.1.min.js"
+            integrity="sha256-gvQgAFzTH6trSrAWoH1iPo9Xc96QxSZ3feW6kem+O00="
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <script>
+      $("input[type=\"submit\"]").click(function(e) {
+        e.preventDefault();
+        
+        
+        var month = $('select[name=\"month\"]').val() || "Jan";
+        var day = $('input[name=\"day\"]').val() || 01;
+        var year = $('input[name=\"year\"]').val() || 1969;
+        console.log(window.location + "/" + year + "/" + month + "/" + day);
+        $.get(window.location + "/" + year + "/" + month + "/" + day, function(data) {
+          console.log(data);
+          $('.result').html("");
+          var panel = $("<div class=\"panel\"></div>")
+          panel.append("<h2>The top song on " + month + " " + day + ", " + year + " was:</h2>");
+          panel.append("<div class=\"embed-responsive embed-responsive-16by9\"><iframe src=\"https://www.youtube.com/embed?listType=search&list=" + data.name + " " + data.artist + " official\"></iframe></div>")
+          
+          $('.result').append(panel);
+        });
+      });
+    </script>
+    
+  </body>
+</html>

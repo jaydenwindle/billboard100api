@@ -1,0 +1,56 @@
+@import url('https://fonts.googleapis.com/css?family=Fjalla+One');
+
+body {
+  background: #DC2424; /* fallback for old browsers */
+  background: -webkit-linear-gradient(to left top, #DC2424 , #4A569D); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to left top, #DC2424 , #4A569D); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+header {
+  color: #fff;
+  padding: 100px 0px;
+}
+
+h1, h2, h3, h4, h5, h6, p, a, .btn, input, select {
+  font-family: "Fjalla One", sans-serif !important;
+}
+
+h1 {
+  font-weight: 800 !important;
+}
+
+header {
+  text-align: center;
+}
+
+header h1 {
+  font-size: 70px;
+  letter-spacing: 2px;
+  text-shadow: 0px 3px 3px rgba(0, 0, 0, 0.2);
+}
+
+header h3 {
+  text-shadow: 0px 2px 3px rgba(0, 0, 0, 0.2);
+}
+
+main .btn {
+  background-color: #4A569D;
+  border: 1px #4A569D;
+  padding-top: 7px;
+  padding-bottom: 7px;
+  transition: all 0.3s ease;
+}
+main .btn:hover {
+  background-color: #DC2424;
+  border: 1px #DC2424;
+}
+
+.form-wrap, .result .panel, .usage {
+  overflow: hidden;
+  padding: 30px 30px;
+}
+
+.result .panel h2, .usage h2 {
+  margin-top: 0px;
+}
+
